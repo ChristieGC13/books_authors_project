@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col">
+            <h1>Add A Book</h1>
+            <form action="/create_book" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title:</label>
+                    <input type="text" name="title" id="title" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="desc" class="form-label">Description:</label>
+                    <input type="text" name="desc" id="desc" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <input type="submit" value="Add Book" class="btn btn-primary">
+                </div>
+            </form>
+        </div>
+        <div class="col">
+            <table class="table-bordered table striped">
+                <thead>
+                    <tr>
+                        <td>ID</td>
+                        <td>Title</td>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in books %}
+                    <tr>
+                        <td>{{ book.id }}</td>
+                        <td>{{ book.title }}</td>
+                        <td><a href="/books/{{ book.id }}">View</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="/authors" class="btn btn-sm btn-primary">View Authors</a>
+        </div>
+    </div>
+</div>
+
+{% endblock main %}

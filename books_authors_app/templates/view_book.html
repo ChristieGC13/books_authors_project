@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="container mt-5">
+    <div class="card p-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ book.title }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted"> ID: {{ book.id }}</h6>
+            <h6 class="card-subtitle mb-2 text-muted"> Description: </h6>
+            <p class="card-text">{{ book.desc }}</p>
+            <div class="mb-3">
+                <h6 class="card-subtitle mb-2 text-muted"> Authors:</h6>
+                <ul>
+                    {% for author in authors %}
+                        <li>{{ author.first_name }} {{ author.last_name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <form action="/add_author" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="book_id" value="{{book.id}}">
+            <select name="author_id" class="form-control mb-3">
+                <option value="0">-Select an Author-</option>
+                {% for author in non_authors %}
+                <option value="{{ author.id }}">{{ author.first_name }} {{ author.last_name }}</option>
+                {% endfor %}
+            </select>
+            <div class="d-flex justify-content-end">
+                <input type="submit" value="Add" class="btn btn-primary">
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock main %}
